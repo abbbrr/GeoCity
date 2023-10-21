@@ -1,5 +1,5 @@
 import SwiftUI
-
+import SDWebImageSwiftUI
 
 struct RestaurantResponse: Codable {
     let data: [Restaurant]
@@ -33,32 +33,114 @@ struct Restaurant: Codable {
     let description: String?
     let web_url: String?
     let write_review: String?
+    let photo: photo?
+}
+
+struct photo: Codable {
+    let images: [String: medium]?
+}
+struct medium: Codable{
+    let url:String?
 }
 
 struct test2: View {
     @State private var restaurants: [Restaurant] = []
+    
+    let cor1 = "51.1333"
+    let cor2 = "71.4333"
 
     var body: some View {
-        NavigationView {
-            List(restaurants, id: \.location_id) { restaurant in
-                VStack{
-                    Text("Location ID: \(restaurant.location_id)")
-                        .foregroundColor(.black)
-                        if let name = restaurant.name {
-                            Text("Name: \(name)")
-                                .foregroundColor(.black)
-                        } else {
-                            Text("Name: N/A")
-                                .foregroundColor(.black)
+        VStack(alignment: .leading){
+            ForEach(restaurants, id: \.location_id) { restaurant in
+                VStack(alignment:.leading,spacing: 9){
+                    if let photo = restaurant.photo?.images,
+                        let imageURL = photo["medium"]?.url,
+                            let url = URL(string: imageURL){
+                                WebImage(url: url)
+                                    .resizable()
+                                    .aspectRatio(contentMode: .fill)
+                                    .frame(width: 270, height: 139)
+                                    .cornerRadius(15)
+                                    .clipped()
+                            } else {
+                                Image("img")
+                                    .resizable()
+                                    .aspectRatio(contentMode: .fill)
+                                    .frame(width: 270, height: 139)
+                                    .cornerRadius(15)
+                                    .clipped()
+                            }
+                   
+                    HStack{
+                        if let name = restaurant.name{
+                            Text("\(name)")
+                              .font(
+                                Font.custom("Noto Sans", size: 20)
+                                  .weight(.medium)
+                              )
+                              .foregroundColor(Color(red: 0.36, green: 0.36, blue: 0.36))
+                              .frame(maxWidth: .infinity, alignment: .topLeading)
+                        } else{
+                            Text("Restaurant no name")
+                              .font(
+                                Font.custom("Noto Sans", size: 20)
+                                  .weight(.medium)
+                              )
+                              .foregroundColor(Color(red: 0.36, green: 0.36, blue: 0.36))
+                              .frame(maxWidth: .infinity, alignment: .topLeading)
                         }
-                        if let latitude = restaurant.latitude {
-                            Text("Latitude: \(latitude)")
-                                .foregroundColor(.black)
-                        } else {
-                            Text("Latitude: N/A")
-                                .foregroundColor(.black)
+                        
+                       
+                        
+                        HStack{
+                            Image("star")
+                                .padding(0)
+                                .frame(width: 14, height: 14, alignment: .center)
+                            if let rating = restaurant.rating{
+                                Text("\(rating)")
+                                  .font(
+                                    Font.custom("Noto Sans", size: 16)
+                                      .weight(.medium)
+                                  )
+                                  .foregroundColor(Color(red: 0.36, green: 0.36, blue: 0.36))
+                            }else{
+                                Text("2.2")
+                                  .font(
+                                    Font.custom("Noto Sans", size: 16)
+                                      .weight(.medium)
+                                  )
+                                  .foregroundColor(Color(red: 0.36, green: 0.36, blue: 0.36))
+                            }
+                           
                         }
+                    }
+                    Text("Restaurant")
+                        .foregroundColor(.gray)
+                    
+                    //MARK: -button MAP
+                    Button {
+                        //
+                    } label: {
+                        HStack{
+                            Image(systemName: "mappin")
+                                .foregroundColor(.blue.opacity(0.7))
+                                .font(.title3)
+                            
+                            Text("Show on map")
+                                .foregroundColor(.blue.opacity(0.7))
+                                .fontWeight(.semibold)
+                        }
+                    }
+                    .cornerRadius(50)
                 }
+                .padding(.horizontal, 15)
+                .padding(.top, 14)
+                .padding(.bottom, 24)
+                .frame(width: 300, height: 270)
+                .background(Color(red: 0.99, green: 0.99, blue: 0.99))
+                .cornerRadius(26)
+                .shadow(color: .black.opacity(0.07), radius: 7.5, x: 0, y: 4)
+                .padding(.horizontal)
             }
         }
         .onAppear(perform: fetchData)
@@ -70,9 +152,9 @@ struct test2: View {
             "X-RapidAPI-Host": "travel-advisor.p.rapidapi.com"
         ]
 
-        let request = NSMutableURLRequest(url: NSURL(string: "https://travel-advisor.p.rapidapi.com/restaurants/list-in-boundary?bl_latitude=11.847676&tr_latitude=12.838442&bl_longitude=109.095887&tr_longitude=109.149359&restaurant_tagcategory_standalone=10591&restaurant_tagcategory_standalone=10591&limit=30&currency=USD&lunit=km&lang=en_US")! as URL,
-                                        cachePolicy: .useProtocolCachePolicy,
-                                    timeoutInterval: 10.0)
+        let request = NSMutableURLRequest(url: NSURL(string: "https://travel-advisor.p.rapidapi.com/restaurants/list-by-latlng?latitude=\(cor1)&longitude=\(cor2)&limit=30&currency=USD&distance=2&lunit=km&lang=en_US")! as URL,
+                                          cachePolicy: .useProtocolCachePolicy,
+                                      timeoutInterval: 10.0)
         request.httpMethod = "GET"
         request.allHTTPHeaderFields = headers
 

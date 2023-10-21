@@ -12,9 +12,9 @@ struct CircleIconView: View {
     var categories = [
         Categories(id: 1, image: "extreme", name: "Attractions", shadowColor: Color.yellow.opacity(0.8)),
         Categories(id: 2, image: "food", name: "Restaurant", shadowColor: Color.red.opacity(0.8)),
-        Categories(id: 3, image: "park", name: "Hotels", shadowColor: Color.green.opacity(0.8)),
     ]
     @State private var clickCard:Int? = nil
+    @Binding var categor:String
     
     var body: some View {
         ForEach(categories.enumerated().map { $0 }, id: \.1.id){ index, categorie in
@@ -42,8 +42,11 @@ struct CircleIconView: View {
             .onTapGesture {
                 if clickCard == index {
                     clickCard = nil
-                } else{
+                    categor = ""
+                } else {
                     clickCard = index
+                    categor = categorie.name
+                    print(categor)
                 }
             }
         }
@@ -56,118 +59,96 @@ struct HomeView: View {
     @State private var selectedCity: String?
     @StateObject var searchModel = SearchObservableObject()
     @State private var text = ""
+    @State private var categor = ""
+    
+    var country:String
+    var city:String
+    var latitude:String
+    var longitude:String
     
     var body: some View {
         NavigationView {
-            ZStack{
+            ZStack(alignment: .leading){
                 Color("background_color")
                     .edgesIgnoringSafeArea(.all)
                 
-                VStack(alignment: .leading){
-                    Text("USA, New York")
-                        .font(
-                            .system(size: 35)
-                            .weight(.heavy)
-                        )
-                        .foregroundColor(Color(red: 0.14, green: 0.14, blue: 0.14))
-                        .padding()
-                        .padding(.horizontal)
-                    
-                   
-                    
-                    //MARK: -categories
-                    VStack(alignment:.leading){
-                        Text("Categories")
+                ScrollView{
+                    VStack(alignment: .leading){
+                        Text("\(country), \(city)")
                             .font(
-                                .system(size: 22)
-                                .weight(.medium)
+                                .system(size: 31)
+                                .weight(.heavy)
                             )
                             .foregroundColor(Color(red: 0.14, green: 0.14, blue: 0.14))
                             .padding()
-                            .padding(.horizontal)
+//                        Text(latitude)
+//                        Text(longitude)
                         
-//                        //MARK: -card
-                        HStack{
-                            CircleIconView()
-                        }
-                        
-                    }
-                    .padding(.vertical)
-                    .padding(.top)
-                    
-                //MARK: -allCard
-                    VStack(alignment:.leading){
-                        Text("Most popular")
-                            .font(
-                                .system(size: 22)
-                                .weight(.medium)
-                            )
-                            .foregroundColor(Color(red: 0.14, green: 0.14, blue: 0.14))
-                            .padding()
-                            .padding(.horizontal)
-                        
+                        //MARK: -categories
+                        VStack(alignment:.leading){
+                            Text("Categories")
+                                .font(
+                                    .system(size: 22)
+                                    .weight(.medium)
+                                )
+                                .foregroundColor(Color(red: 0.14, green: 0.14, blue: 0.14))
+                                .padding(.horizontal)
+                            
                         //MARK: -card
-                        VStack(alignment:.leading,spacing: 9){
-                            Image("img")
-                                .resizable()
-                                .aspectRatio(contentMode: .fill)
-                                .frame(width: 223, height: 139)
-                                .clipped()
                             HStack{
-                                Text("Burj Khalifa")
-                                  .font(
-                                    Font.custom("Noto Sans", size: 20)
-                                      .weight(.medium)
-                                  )
-                                  .foregroundColor(Color(red: 0.36, green: 0.36, blue: 0.36))
-                                  .frame(maxWidth: .infinity, alignment: .topLeading)
+                                CircleIconView(categor: $categor)
+                            }
+                            
+                        }.padding(.top)
+                        
+                    //MARK: -allCard
+                        VStack(alignment:.center){
+                            if !categor.isEmpty{
+                                if categor == "Restaurant"{
+                                    Text("Рестораны")
+                                        .font(
+                                            .system(size: 22)
+                                            .weight(.medium)
+                                        )
+                                        .foregroundColor(Color(red: 0.14, green: 0.14, blue: 0.14))
+                                        .padding()
+                                } else if categor == "Attractions"{
+                                    Text("Атракционы")
+                                        .font(
+                                            .system(size: 22)
+                                            .weight(.medium)
+                                        )
+                                        .foregroundColor(Color(red: 0.14, green: 0.14, blue: 0.14))
+                                        .padding()
+                                }else{
+                                    Text("че то вообще не то")
+                                }
+                            }else {
+    //                                test2()
                                 
-                                HStack{
-                                    Image("star")
-                                        .padding(0)
-                                        .frame(width: 14, height: 14, alignment: .center)
-                                    Text("4.8")
-                                      .font(
-                                        Font.custom("Noto Sans", size: 16)
-                                          .weight(.medium)
-                                      )
-                                      .foregroundColor(Color(red: 0.36, green: 0.36, blue: 0.36))
-                                }
+                                Text("Список пуст!")
+                                    .font(
+                                        .system(size: 22)
+                                        .weight(.medium)
+                                    )
+                                    .foregroundColor(Color(red: 0.14, green: 0.14, blue: 0.14))
+                                Image("je")
+                                    .resizable()
+                                    .frame(width: 295,height: 320)
+                                    .padding()
+                                    .padding(.horizontal)
                             }
-                            //MARK: -button MAP
-                            Button {
-                                //
-                            } label: {
-                                HStack{
-                                    Image(systemName: "mappin")
-                                        .foregroundColor(.blue.opacity(0.7))
-                                        .font(.title3)
-                                    
-                                    Text("Show on map")
-                                        .foregroundColor(.blue.opacity(0.7))
-                                        .fontWeight(.semibold)
-                                }
-                            }
-                            .cornerRadius(50)
                         }
-                        .padding(.horizontal, 15)
-                        .padding(.top, 14)
-                        .padding(.bottom, 24)
-                        .frame(width: 250, height: 230)
-                        .background(Color(red: 0.99, green: 0.99, blue: 0.99))
-                        .cornerRadius(26)
-                        .shadow(color: .black.opacity(0.07), radius: 7.5, x: 0, y: 4)
-                        .padding(.horizontal)
-                    }
-                }
+                    }.padding()
+                } //end scrolview
+                
             }
         }
-        //end navigation
     }
 }
 
 struct HomeView_Previews: PreviewProvider {
     static var previews: some View {
-        HomeView()
+        HomeView(country: "USA", city: "New York", latitude: "40.7143", longitude: "-74.006")
     }
 }

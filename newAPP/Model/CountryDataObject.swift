@@ -3,5 +3,5 @@ import Foundation
 struct CountryDataObject:Identifiable{
     let id: Int
     let name:String
-    let city: [String]
+    let city: [String: (String?,String?)]
 }

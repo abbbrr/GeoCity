@@ -101,7 +101,7 @@ struct HelloView: View {
                         .padding()
                         .padding(.horizontal)
                         .opacity(isTextVisible ? 1 : 0)
-                        .animation(.easeIn(duration: 1))
+                        .animation(Animation.easeIn(duration: 1))
                         .onAppear(){
                             withAnimation {
                                 isTextVisible = true
