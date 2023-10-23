@@ -27,6 +27,7 @@
 		645A0AC52AD9025800922B1F /* HelloView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 645A0AC42AD9025800922B1F /* HelloView.swift */; };
 		645A0AC82AD9028C00922B1F /* Country.swift in Sources */ = {isa = PBXBuildFile; fileRef = 645A0AC72AD9028C00922B1F /* Country.swift */; };
 		645A0ACA2AD902B900922B1F /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 645A0AC92AD902B900922B1F /* HomeView.swift */; };
+		6474B0E72AE63DBC0059D3A2 /* PageScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6474B0E62AE63DBC0059D3A2 /* PageScreen.swift */; };
 		64AB9F1B2ADFD5FC00D43FE6 /* test3.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64AB9F1A2ADFD5FC00D43FE6 /* test3.swift */; };
 		64AB9F212AE101AF00D43FE6 /* SDWebImageSwiftUI in Frameworks */ = {isa = PBXBuildFile; productRef = 64AB9F202AE101AF00D43FE6 /* SDWebImageSwiftUI */; };
 /* End PBXBuildFile section */
@@ -72,6 +73,7 @@
 		645A0AC42AD9025800922B1F /* HelloView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HelloView.swift; sourceTree = "<group>"; };
 		645A0AC72AD9028C00922B1F /* Country.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Country.swift; sourceTree = "<group>"; };
 		645A0AC92AD902B900922B1F /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
+		6474B0E62AE63DBC0059D3A2 /* PageScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PageScreen.swift; sourceTree = "<group>"; };
 		64AB9F1A2ADFD5FC00D43FE6 /* test3.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = test3.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -203,6 +205,7 @@
 				642353182ADD300B007DF9C9 /* Component */,
 				645A0AC42AD9025800922B1F /* HelloView.swift */,
 				645A0AC92AD902B900922B1F /* HomeView.swift */,
+				6474B0E62AE63DBC0059D3A2 /* PageScreen.swift */,
 				6423530E2ADD2483007DF9C9 /* test.swift */,
 				6423531B2ADD9DB4007DF9C9 /* test2.swift */,
 				64AB9F1A2ADFD5FC00D43FE6 /* test3.swift */,
@@ -367,6 +370,7 @@
 				645A0A932AD901A800922B1F /* ContentView.swift in Sources */,
 				6423531A2ADD3033007DF9C9 /* FieldExample.swift in Sources */,
 				642353112ADD2A2D007DF9C9 /* MockSevice.swift in Sources */,
+				6474B0E72AE63DBC0059D3A2 /* PageScreen.swift in Sources */,
 				645A0ACA2AD902B900922B1F /* HomeView.swift in Sources */,
 				645A0A912AD901A800922B1F /* newAPPApp.swift in Sources */,
 				6423531C2ADD9DB4007DF9C9 /* test2.swift in Sources */,

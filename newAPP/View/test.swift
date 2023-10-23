@@ -120,8 +120,14 @@ struct test: View {
                                 }
                                 .listStyle(PlainListStyle())
                             } else{
-                                Text("К сожалению, мы не нашли подходящих стран.")
-                                    .font(.system(size: 21, weight: .medium))
+                                Text("Ouch!")
+                                    .font(.system(size: 27, weight: .bold))
+                                    .foregroundColor(Color(red: 0.14, green: 0.14, blue: 0.14))
+                                    .multilineTextAlignment(.center)
+                                    .frame(maxWidth: .infinity)
+                                    .padding(.horizontal)
+                                Text("Something went wrong.")
+                                    .font(.system(size: 20, weight: .medium))
                                     .foregroundColor(Color(red: 0.14, green: 0.14, blue: 0.14))
                                     .multilineTextAlignment(.center)
                                     .frame(maxWidth: .infinity)
@@ -152,8 +158,8 @@ struct test: View {
                     //MARK: -no info
                     if text.count == 0{
                         VStack(alignment:.center){
-                            Text("Пожалуйста, введите сначала название страны, а затем название города.")
-                                .font(.system(size: 21, weight: .medium))
+                            Text("Please enter the country name.")
+                                .font(.system(size: 20, weight: .medium))
                                 .foregroundColor(Color(red: 0.14, green: 0.14, blue: 0.14))
                                 .multilineTextAlignment(.center)
                                 .frame(maxWidth: .infinity)
@@ -172,6 +178,8 @@ struct test: View {
             }
 
         }
+        .navigationBarTitle("", displayMode: .inline) // Скрыть заголовок
+        .navigationBarBackButtonHidden(true)
     }
 }
 

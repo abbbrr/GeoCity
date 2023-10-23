@@ -10,8 +10,8 @@ struct Categories{
 //MARK: -component
 struct CircleIconView: View {
     var categories = [
-        Categories(id: 1, image: "extreme", name: "Attractions", shadowColor: Color.yellow.opacity(0.8)),
-        Categories(id: 2, image: "food", name: "Restaurant", shadowColor: Color.red.opacity(0.8)),
+        Categories(id: 1, image: "food", name: "Restaurant", shadowColor: Color.red.opacity(0.8)),
+        Categories(id: 2, image: "extreme", name: "Attractions", shadowColor: Color.yellow.opacity(0.8)),
     ]
     @State private var clickCard:Int? = nil
     @Binding var categor:String
@@ -50,12 +50,13 @@ struct CircleIconView: View {
                 }
             }
         }
-        .navigationBarBackButtonHidden(true)
+//        .navigationBarBackButtonHidden(true)
     }
 }
 
 
 struct HomeView: View {
+    @State private var isLoading = false
     @State private var selectedCity: String?
     @StateObject var searchModel = SearchObservableObject()
     @State private var text = ""
@@ -67,82 +68,126 @@ struct HomeView: View {
     var longitude:String
     
     var body: some View {
-        NavigationView {
-            ZStack(alignment: .leading){
-                Color("background_color")
-                    .edgesIgnoringSafeArea(.all)
-                
-                ScrollView{
-                    VStack(alignment: .leading){
-                        Text("\(country), \(city)")
+        ZStack(alignment: .center){
+            Color("background_color")
+                .edgesIgnoringSafeArea(.all)
+            
+            ScrollView{
+                VStack(alignment: .center){
+                    Text("\(country), \(city)")
+                        .font(
+                            .system(size: 31)
+                            .weight(.heavy)
+                        )
+                        .foregroundColor(Color(red: 0.14, green: 0.14, blue: 0.14))
+                        .padding()
+                    
+                    //MARK: -categories
+                    VStack(alignment:.leading){
+                        Text("Categories")
                             .font(
-                                .system(size: 31)
-                                .weight(.heavy)
+                                .system(size: 22)
+                                .weight(.medium)
                             )
                             .foregroundColor(Color(red: 0.14, green: 0.14, blue: 0.14))
-                            .padding()
-//                        Text(latitude)
-//                        Text(longitude)
+                            .padding(.horizontal)
+                            .padding(.trailing,150)
                         
-                        //MARK: -categories
-                        VStack(alignment:.leading){
-                            Text("Categories")
-                                .font(
-                                    .system(size: 22)
-                                    .weight(.medium)
-                                )
-                                .foregroundColor(Color(red: 0.14, green: 0.14, blue: 0.14))
-                                .padding(.horizontal)
-                            
-                        //MARK: -card
-                            HStack{
-                                CircleIconView(categor: $categor)
-                            }
-                            
-                        }.padding(.top)
+                    //MARK: -card
+                        HStack{
+                            CircleIconView(categor: $categor)
+                        }
                         
-                    //MARK: -allCard
-                        VStack(alignment:.center){
-                            if !categor.isEmpty{
-                                if categor == "Restaurant"{
-                                    Text("Рестораны")
-                                        .font(
-                                            .system(size: 22)
-                                            .weight(.medium)
-                                        )
-                                        .foregroundColor(Color(red: 0.14, green: 0.14, blue: 0.14))
-                                        .padding()
-                                } else if categor == "Attractions"{
-                                    Text("Атракционы")
-                                        .font(
-                                            .system(size: 22)
-                                            .weight(.medium)
-                                        )
-                                        .foregroundColor(Color(red: 0.14, green: 0.14, blue: 0.14))
-                                        .padding()
-                                }else{
-                                    Text("че то вообще не то")
-                                }
-                            }else {
-    //                                test2()
-                                
-                                Text("Список пуст!")
+                    }.padding(.top)
+                    
+                //MARK: -allCard
+                    VStack(alignment:.center){
+                        if !categor.isEmpty{
+                            if categor == "Restaurant"{
+                                Text("Restaurant")
                                     .font(
                                         .system(size: 22)
                                         .weight(.medium)
                                     )
                                     .foregroundColor(Color(red: 0.14, green: 0.14, blue: 0.14))
-                                Image("je")
-                                    .resizable()
-                                    .frame(width: 295,height: 320)
                                     .padding()
                                     .padding(.horizontal)
+                                    .padding(.trailing,150)
+                                
+                                //выгрузка данных из API
+                                VStack(alignment: .trailing){
+                                    if isLoading{
+                                        ProgressView("Loading...")
+                                                .progressViewStyle(CircularProgressViewStyle())
+                                                .scaleEffect(1.5)
+                                                .padding()
+                                                .padding(.top,100)
+                                    } else{
+                                        test2(cor1: latitude, cor2: longitude, content: "restaurants")
+
+                                    }
+                                }
+                            }else{
+                                Text("Atractions")
+                                    .font(
+                                        .system(size: 22)
+                                        .weight(.medium)
+                                    )
+                                    .foregroundColor(Color(red: 0.14, green: 0.14, blue: 0.14))
+                                    .padding()
+                                    .padding(.horizontal)
+                                    .padding(.trailing,150)
+                                
+                                //выгрузка данных из API
+                                VStack(alignment: .trailing){
+                                    if isLoading{
+                                        ProgressView("Loading...")
+                                                .progressViewStyle(CircularProgressViewStyle())
+                                                .scaleEffect(1.5)
+                                                .padding()
+                                                .padding(.top,100)
+                                    } else{
+                                        test2(cor1: latitude, cor2: longitude, content: "attractions")
+                                    }
+                                }
+                            }
+                        }else {
+                            VStack(spacing: 0){
+                                Image("je")
+                                    .resizable()
+                                    .frame(width: 285,height: 290)
+                                    .padding(.horizontal)
+                                
+                                Text("NOTHING")
+                                    .font(
+                                        .system(size: 25)
+                                        .weight(.bold)
+                                    )
+                                    .foregroundColor(Color(red: 0.14, green: 0.14, blue: 0.14))
+                                    .padding(.bottom,5)
+                                Text("Your collection list is empty.")
+                                    .font(
+                                        .system(size: 20)
+                                        .weight(.medium)
+                                    )
+                                    .foregroundColor(Color(red: 0.14, green: 0.14, blue: 0.14))
                             }
                         }
-                    }.padding()
-                } //end scrolview
-                
-            }
+                    }
+                }.padding()
+            } //end scrolview
+            
+        }
+        .onAppear {
+            // Начало загрузки данных
+            isLoading = true
+            // Ваш код для загрузки данных из API
+            loadDataFromAPI()
+        }
+    }
+    func loadDataFromAPI(){
+        DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+            isLoading = false
         }
     }
 }

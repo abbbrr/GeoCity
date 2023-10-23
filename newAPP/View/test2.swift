@@ -46,8 +46,10 @@ struct medium: Codable{
 struct test2: View {
     @State private var restaurants: [Restaurant] = []
     
-    let cor1 = "51.1333"
-    let cor2 = "71.4333"
+    let cor1:String
+    let cor2:String
+    
+    var content: String
 
     var body: some View {
         VStack(alignment: .leading){
@@ -80,8 +82,8 @@ struct test2: View {
                               )
                               .foregroundColor(Color(red: 0.36, green: 0.36, blue: 0.36))
                               .frame(maxWidth: .infinity, alignment: .topLeading)
-                        } else{
-                            Text("Restaurant no name")
+                        } else {
+                            Text("no name")
                               .font(
                                 Font.custom("Noto Sans", size: 20)
                                   .weight(.medium)
@@ -152,7 +154,7 @@ struct test2: View {
             "X-RapidAPI-Host": "travel-advisor.p.rapidapi.com"
         ]
 
-        let request = NSMutableURLRequest(url: NSURL(string: "https://travel-advisor.p.rapidapi.com/restaurants/list-by-latlng?latitude=\(cor1)&longitude=\(cor2)&limit=30&currency=USD&distance=2&lunit=km&lang=en_US")! as URL,
+        let request = NSMutableURLRequest(url: NSURL(string: "https://travel-advisor.p.rapidapi.com/\(content)/list-by-latlng?latitude=\(cor1)&longitude=\(cor2)&limit=30&currency=USD&distance=2&lunit=km&lang=en_US")! as URL,
                                           cachePolicy: .useProtocolCachePolicy,
                                       timeoutInterval: 10.0)
         request.httpMethod = "GET"
@@ -209,6 +211,6 @@ struct test2: View {
 }
 struct test2_Previews: PreviewProvider {
     static var previews: some View {
-        test2()
+        test2(cor1: "55.7525", cor2: "37.6178", content: "attractions")
     }
 }
