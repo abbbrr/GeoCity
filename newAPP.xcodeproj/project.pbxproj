@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		641305472AE798C600FE7A31 /* URLImage in Frameworks */ = {isa = PBXBuildFile; productRef = 641305462AE798C600FE7A31 /* URLImage */; };
 		6423530F2ADD2483007DF9C9 /* test.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6423530E2ADD2483007DF9C9 /* test.swift */; };
 		642353112ADD2A2D007DF9C9 /* MockSevice.swift in Sources */ = {isa = PBXBuildFile; fileRef = 642353102ADD2A2D007DF9C9 /* MockSevice.swift */; };
 		642353142ADD2AF3007DF9C9 /* CountryDataObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 642353132ADD2AF3007DF9C9 /* CountryDataObject.swift */; };
@@ -82,6 +83,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				641305472AE798C600FE7A31 /* URLImage in Frameworks */,
 				64AB9F212AE101AF00D43FE6 /* SDWebImageSwiftUI in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -240,6 +242,7 @@
 			name = newAPP;
 			packageProductDependencies = (
 				64AB9F202AE101AF00D43FE6 /* SDWebImageSwiftUI */,
+				641305462AE798C600FE7A31 /* URLImage */,
 			);
 			productName = newAPP;
 			productReference = 645A0A8D2AD901A800922B1F /* newAPP.app */;
@@ -315,6 +318,7 @@
 			mainGroup = 645A0A842AD901A800922B1F;
 			packageReferences = (
 				64AB9F1F2AE101AF00D43FE6 /* XCRemoteSwiftPackageReference "SDWebImageSwiftUI" */,
+				641305452AE798C500FE7A31 /* XCRemoteSwiftPackageReference "url-image" */,
 			);
 			productRefGroup = 645A0A8E2AD901A800922B1F /* Products */;
 			projectDirPath = "";
@@ -695,6 +699,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		641305452AE798C500FE7A31 /* XCRemoteSwiftPackageReference "url-image" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/dmytro-anokhin/url-image";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 3.0.0;
+			};
+		};
 		64AB9F1F2AE101AF00D43FE6 /* XCRemoteSwiftPackageReference "SDWebImageSwiftUI" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/SDWebImage/SDWebImageSwiftUI.git";
@@ -706,6 +718,11 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		641305462AE798C600FE7A31 /* URLImage */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 641305452AE798C500FE7A31 /* XCRemoteSwiftPackageReference "url-image" */;
+			productName = URLImage;
+		};
 		64AB9F202AE101AF00D43FE6 /* SDWebImageSwiftUI */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 64AB9F1F2AE101AF00D43FE6 /* XCRemoteSwiftPackageReference "SDWebImageSwiftUI" */;

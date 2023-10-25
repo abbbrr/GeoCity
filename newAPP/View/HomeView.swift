@@ -50,7 +50,6 @@ struct CircleIconView: View {
                 }
             }
         }
-//        .navigationBarBackButtonHidden(true)
     }
 }
 

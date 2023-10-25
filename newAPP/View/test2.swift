@@ -1,4 +1,5 @@
 import SwiftUI
+import URLImage
 import SDWebImageSwiftUI
 
 struct RestaurantResponse: Codable {
@@ -33,14 +34,17 @@ struct Restaurant: Codable {
     let description: String?
     let web_url: String?
     let write_review: String?
-    let photo: photo?
+    let phone:String?
+    let website:String?
+    let address:String?
+    var photo: photo?
 }
 
 struct photo: Codable {
-    let images: [String: medium]?
+    var images: [String: medium]?
 }
 struct medium: Codable{
-    let url:String?
+    var url:String?
 }
 
 struct test2: View {
@@ -55,23 +59,26 @@ struct test2: View {
         VStack(alignment: .leading){
             ForEach(restaurants, id: \.location_id) { restaurant in
                 VStack(alignment:.leading,spacing: 9){
-                    if let photo = restaurant.photo?.images,
-                        let imageURL = photo["medium"]?.url,
-                            let url = URL(string: imageURL){
-                                WebImage(url: url)
-                                    .resizable()
-                                    .aspectRatio(contentMode: .fill)
-                                    .frame(width: 270, height: 139)
-                                    .cornerRadius(15)
-                                    .clipped()
-                            } else {
-                                Image("img")
-                                    .resizable()
-                                    .aspectRatio(contentMode: .fill)
-                                    .frame(width: 270, height: 139)
-                                    .cornerRadius(15)
-                                    .clipped()
-                            }
+
+                    if let photo = restaurant.photo?.images, let imageURL = photo["medium"]?.url,
+                       let url = URL(string: imageURL){
+                        URLImage(url){image in
+                            image
+                                .resizable()
+                                .aspectRatio(contentMode: .fill)
+                                .frame(width: 270, height: 139)
+                                .cornerRadius(15)
+                                .clipped()
+                        }
+                    } else{
+                        Image("404")
+                            .resizable()
+                            .aspectRatio(contentMode: .fill)
+                            .frame(width: 270, height: 139)
+                            .cornerRadius(15)
+                            .clipped()
+                    }
+                    
                    
                     HStack{
                         if let name = restaurant.name{
@@ -120,20 +127,10 @@ struct test2: View {
                         .foregroundColor(.gray)
                     
                     //MARK: -button MAP
-                    Button {
-                        //
-                    } label: {
-                        HStack{
-                            Image(systemName: "mappin")
-                                .foregroundColor(.blue.opacity(0.7))
-                                .font(.title3)
-                            
-                            Text("Show on map")
-                                .foregroundColor(.blue.opacity(0.7))
-                                .fontWeight(.semibold)
-                        }
+                    NavigationLink(destination: PageScreen(restaurant: restaurant)) {
+                        Text("See Details")
                     }
-                    .cornerRadius(50)
+
                 }
                 .padding(.horizontal, 15)
                 .padding(.top, 14)
